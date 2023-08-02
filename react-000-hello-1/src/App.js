@@ -21,7 +21,9 @@ function App() {
     // p tag에 표시된 count 값이 변화되었으니
     // p tag에 count 값을 표시하라
   };
-
+const clickHandler3=()=>{
+  setCount(count*2);
+}
   return (
     <div className="App">
       <header className="App-header">
@@ -32,6 +34,7 @@ function App() {
         {/* <div onClick={() => setCount(count + 1)}>카운터 증가</div> */}
         <div onClick={clickHandlerDecre}>카운터 감소</div>
         <div onClick={clickHandlerIncre}>카운터 증가</div>
+        <div onClick={clickHandler3}>카운터 곱하기</div>
         <Input />
       </header>
     </div>

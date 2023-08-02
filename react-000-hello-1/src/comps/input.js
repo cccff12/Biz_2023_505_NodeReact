@@ -16,7 +16,7 @@ const Input = () => {
   // const nation=""
   // const setnation=()
 
-  //   이건 const nations=[] 이라는 말이다
+  //   이건 const nations=["우리나라,대한민국"] 이라는 말이다
   const [nations, setNations] = useState(["우리나라,대한민국"]);
 
   // nations 배열의 개수만큼 <div>{item}</div> 를
@@ -25,6 +25,9 @@ const Input = () => {
   const nationList = nations.map((item) => {
     return <div>{item}</div>;
   });
+
+ 
+
 
   const inputChangeHandler = (e) => {
     // input tag의 값을 nation이라는 값에 세팅하라
@@ -39,10 +42,17 @@ nations 배열을 전개하여 새로운 배열을 하나 만들고
 기존의 nations 배열과 `교체하라`
 */
 
+
   return (
     <div>
+      {/*  nations state를 변화하는 함수를 버튼에 클릭이벤트로 설정했다. 
+      input 에 입력되는 값은 nation이라는 state이고, button에 클릭 이벤트로 setNations 라는 함수를 설정했다.
+      그리고 이를 실행하면 nationList에 값이 추가되는데 div 에 그걸 보여준 것이다
+      */}
       <input value={nation} onChange={inputChangeHandler} />
+      
       <button onClick={(e) => setNations([...nations, nation])}>추가</button>
+      {/* nationList는 nation을 나열하는 것을 반복하는 함수 */}
       <div>{nationList} </div>
     </div>
   );
