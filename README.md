@@ -43,9 +43,9 @@
 
 1. NodeJS를 이용한 Back-End Project 에서 가장 많이 사용하는 Framwork 인 Express 를 사용하여 서버 만들기
 2. express-generator를 이용한 Express Server 만들기 : `npx express-generator`
-3. express-21c 를 이용한 ES6+ Express Server 만들기: `npx express-21c [project]`
+3. express-21c 를 이용한 ES6+ Express Server 만들기: `npx express-21c [project]`-\*<!-- 이걸 하면 project이름의 파일이 생긴다 -->
 
-## React Project 만들기
+## React Project 만들기 <!-- 다만 시간관계상 누가 만들어놓은 것을 쓸 것임-->
 
 1. React 폴더에서 새로운 폴더 생성 `mkdir react-000-hello`
 2. 프로젝트 시작: `npm init`
@@ -117,4 +117,17 @@ root.render(
 
 ## create-react-app을 이용한 React Project 생성
 
-`npx create-react-app [프로젝트이름]`
+`npx create-react-app [프로젝트이름]`-\* 대중적으로 많이 사용되는 틀
+
+### 개인적인 이해:
+
+- 프로젝트 폴더의
+  // 1.package.json의 "scripts": {
+  // "start": "react-scripts start"}는 시작되면 제일 먼저 실행되는 것이다
+  // 2. 그리고 index.js로 감
+  // 3.public(이름이 반드시 public 이어야 함) 이라는 폴더를 읽어서 root 를 가진 id를 읽어옴
+
+// 바로밑은 객체로 만드는 것. div id=root 인 박스안에 붙이는 것이다
+// 그리고const root = ReactDom.createRoot(document.querySelector("#root")); 로
+// 불러와
+// root.render로 불러 붙여넣는 것

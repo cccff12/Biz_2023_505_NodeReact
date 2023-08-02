@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>나의 홈페이지</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <input name="name" placeholder="이름을 입력하세요" />
+    <p class="name"></p>
+  </body>
+  <script>
+    document
+      // 인풋박스에 있는 내용이 바뀌면 p tag에 출력하라. 값이 입력되고 focus가 이동되는 순간 적용
+      .querySelector("input[name='name']")
+      .addEventListener("change", (e) => {
+        const text = e.target.value;
+        document.querySelector("p.name").innerHTML = text;
+      });
+  </script>
+</html>

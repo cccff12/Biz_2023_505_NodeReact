@@ -11,3 +11,8 @@
 3. NodeJS라는 이름에서 `Node.JS` 라는 이름으로 어느순간 바뀌어 불리고 있다.
 4. 2018년쯤 Ryan Dahl 이 NodeJS 의 10가지 단점을 스스로 발표한다 . 비동기, 보안 등 관련문제, 그리고 npm에 의존되는 패키지 관리 등을 문제 삼는다
 5. 2019년 라이언달은 `Deno프로젝트` 를 발표한다 아직은 Deno 프롲ㄱ트는 실무에서 별로 사용되지는 않지만 NodeJS생태계만큼 발전할 가능성을 가지고 있다.
+
+## JavaScript Front-End
+
+1. AngularJS, ReactJS, VeuJS 등이 발표되면서 JS를 사용한 Front-End 개발환경이 형성된다.
+2. Angular, React, Veu 라는 단축이름으로 불리우고, Svelt등의 새로운 도구가 탄생하고 있다
