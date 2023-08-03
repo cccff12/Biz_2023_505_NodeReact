@@ -139,3 +139,75 @@ usestate를 input에서는 = useState("");이렇게 빈칸으로
 
   	}
   	이건 버튼을 눌렀을 때 할 일이다.
+
+  *****----근데 여기서 짚고 넘어가야 할 점: 사실 btnClickHandler 이 함수는 todoinput에서 만들어져야 하는 함수가 아니다. content state와 setcontent는 main에서 선언된 것이기 때문에 먼저 할 일이 있다.
+  main에서 아래 함수를 추가한다.
+   const todoListAdd = (todo) => {
+    const addTodo = {
+      sdate: "2023-08-03",
+      stime: "13:26",
+      content: todo,
+      complete: false,
+    };
+    setTodoList([...todoList, addTodo]); -이것도 해석하자면기존 리스트에 addTodo를 추가시키는 거고
+  };
+
+이렇게 객체를 만들고 setTodoList를 통해 추가를 시키는 것이다.
+(todo)는 내가 input에 입력한 값이다
+
+그리고 이렇게 만든 함수를 todoinput에게 보내줘야 한다. 
+main의 return에 이렇게 추가한다 ******(방금 만든 함수 한줄만 추가하면 된다.)
+ return (
+    <div className="todo">
+      <TodoInput
+        content={content}
+        setcontent={setcontent}
+        todoListAdd={todoListAdd}
+      />
+
+      보내줬으면 또 받아야지 
+      todoinput에서 props에 받고 있는 코드에 방금 받은 함수를 입력하면 된다.
+      const { content, setcontent, todoListAdd } = props;
+
+
+      자 그럼 이제 input에 만든 btnClickHandler 함수에 todoListAdd(content);를 추가한다. 그럼 이렇게 된다 
+		        const btnClickHandler = (e) => {
+		   			 todoListAdd(content);
+				 };
+
+	그럼 버튼 박스에 이벤트를 추가한다.  onClick={btnClickHandler}
+	그럼 todoinput의 return은 이렇게 된다
+	return (
+    <div className="input">
+      <input placeholder="TODO" value={content} onChange={inputChangeHandler} />
+      <button onClick={btnClickHandler} disabled={content.length < 2}>
+        저장하기
+      </button>
+    </div>
+  );
+  버튼 tag에 이벤트가 입력된 것이 보이는가? 난 잘 보인다
+
+  이 개념에 대해 요약하자면 state를 변화시키거나 state의 함수를 만들거나 하는건 
+   state를 선언한 곳 (여기서는 부모 컴포넌트인 main)에서 밖에 안된다는 것이다.(READ ONLY) 
+  자식 컴포넌트에서는 이를 어디 적용시키거나 하는 것만 가능할 뿐이다.
+  만약 state를 변경하려면 state를 변경할 함수도 같이 전달받아야 한다.
+
+  그리고 서버를 보면 오류가 하나 있을 것이다. Warning: Each child in a list should have a unique "key" prop. 이런 오류인데 유니크 키 값이 없어서 그런 것이다. 그래서 추가시킬건데 sampledata에 id를  추가시켜 준다. (가능하면 0부터)
+
+  그리고 main으로 와서 const todoListAdd 함수 안에 추가시켜 준다 
+  const todoListAdd = (todo) => {
+    (여기)
+    const addTodo = {} 가로 안에 추가시키면 된다
+
+    const id = todoList[todoList.length - 1].id + 1; 이것인데 요약하면 리스트의 값 -1을 id 로 추가시키겠다는 말이다.
+
+    그리고 todolist로 와서 todoItemList 함수에 return <TodoItem item={todo} 옆에 key={todo.id}를 추가시킨다. 그럼 이렇게 된다.
+    		const todoItemList = todoList.map((todo) => {
+   			 	return <TodoItem item={todo} key={todo.id} />;
+ 			 });
+ 			 이렇게 되면 유니크한 키 값이 생긴다.
+
+
+ 			 이제 날짜와 시간을 받을 도구를 설치할거다 git bash를 들어가서(가장 상위의 파일로 가서 받는게 아니라 프로젝트 파일에 받자)
+ 			 명령어는  npm install moment  이다
+ 			 그럼 package.json의 dependencies에 moment가 추가될 것이다 
