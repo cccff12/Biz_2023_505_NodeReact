@@ -201,6 +201,10 @@ main의 return에 이렇게 추가한다 ******(방금 만든 함수 한줄만 �
 
     const id = todoList[todoList.length - 1].id + 1; 이것인데 요약하면 리스트의 값 -1을 id 로 추가시키겠다는 말이다.
 
+그리고 const addTodo = {
+      id: id, <= 여기에도 이걸 추가시킨다
+
+
     그리고 todolist로 와서 todoItemList 함수에 return <TodoItem item={todo} 옆에 key={todo.id}를 추가시킨다. 그럼 이렇게 된다.
     		const todoItemList = todoList.map((todo) => {
    			 	return <TodoItem item={todo} key={todo.id} />;
@@ -211,3 +215,91 @@ main의 return에 이렇게 추가한다 ******(방금 만든 함수 한줄만 �
  			 이제 날짜와 시간을 받을 도구를 설치할거다 git bash를 들어가서(가장 상위의 파일로 가서 받는게 아니라 프로젝트 파일에 받자)
  			 명령어는  npm install moment  이다
  			 그럼 package.json의 dependencies에 moment가 추가될 것이다 
+
+ 			 그럼 main의 import에 다음을 추가한다  
+ 			 import moment from "moment";
+
+ 			 그럼 이제 시간값을 설정할 수 있게 됐다
+
+
+ 			 그럼 todoListAdd 함수를 이렇게 바꿔준다
+ 			   const todoListAdd = (todo) => {
+   				 const id = todoList[todoList.length - 1].id + 1;
+  				  const addTodo = {
+					      id: id,
+					      sdate: moment().format("YYYY[-]MM[-]DD"),
+					      stime: moment().format("HH:mm:ss"),
+					      content: todo,
+					      complete: false, };
+			    setTodoList([...todoList, addTodo]);
+			  };
+
+			  그리고 main에서 list state 부분을 이렇게 바꿔준다 
+			  const [todoList, setTodoList] = useState([]);
+			 이걸 useState([]) 이렇게 바꿔준다. 배열 안을 빈값으로만 바꾸면 된다. 
+			 그럼 위와 같이 된다
+
+			 여기까지 하면 id가 없다고 에러가 뜰거다 (const id = todoList[todoList.length - 1].id + 1; 여기서 todoList가 없어서 에러가 뜬거다 위에서 빈칸으로 바꿨으니)
+			 
+			 이제 하나를 더 설치해준다 
+			  npm install react-uuid 이거다
+
+			  그리고 에러가 났던 todoListAdd함수의 
+
+			const id = todoList[todoList.length - 1].id + 1 ; 이부분을
+
+			  const id = todoList[todoList.length - 1]?.id + 1 || 0;이렇게 바꿔준다
+
+			  이제 추가한 다음에 input의 입력창을 지워줄거다.
+
+			 todoinput으로 가서
+
+			 btnClickHandler함수에 setcontent("");을 추가한다. 
+			 그럼 이 함수는 const btnClickHandler = (e) => {
+    						todoListAdd(content);
+						    setcontent("");
+  								};이렇게 된다
+
+  				그럼 이제 추가 후 값이 지워진다.
+
+
+  완료 버튼을 눌렀을 떄 완료 처리
+  나 밑줄 긋는 거 구현 안됐는데? 망함
+
+  일단 todoitem에 가서  
+
+   const { item } = props;
+  const compClickHandler = (e, id) => {
+    alert(id);
+  };
+
+  를 리턴 위에 추가하고 
+  div className="complete" 옆에 onClick={compClickHandler} 이걸 추가
+
+  * 여기서 주의 할 점 compClickHandler(item, id) 절대 이렇게 하지말자 이렇게 하면 코드가 지나갈때마다 작동돼서 난리난다
+
+  그래서 <div className="complete" onClick={(e) => compClickHandler(e, item.id)}>이렇게 한다.
+
+그럼 저 div를 누를때마다 id값이 alert에 뜰거다 
+그리고 main에  
+const itemComplete = (id) => {
+    alert(id);
+  }; 함수를 만들고
+  그리고 <TodoList todoList={todoList} itemComplete={itemComplete} />이렇게 todolist에게 보낸다
+
+  그리고 list에 보냈으니 
+  todolist에서 const { todoList, itemComplete(이부분만 추가) } = props; 이렇게 받아서
+    return <TodoItem item={todo} key={todo.id} itemComplete={itemComplete}(이부분만 추가) />;
+  });
+
+  이렇게 추가한다
+
+  그리고 main의 itemComplete 함수를
+  이렇게 바꾼다
+  const itemComplete = (id) => {
+    todoList.map((todo) => {
+      if (todo.id === id) {
+        setcontent({ ...content, id: id });
+      }
+    });
+  };
