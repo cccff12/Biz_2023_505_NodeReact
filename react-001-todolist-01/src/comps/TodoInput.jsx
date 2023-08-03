@@ -1,17 +1,37 @@
 import { useState } from "react";
+import TodoList from "./TodoList";
 
 // 여기는 Todo Content를 입력하고 추가를 실행하는 Component
 // *원래는 ()안이 비어있었지만 부모에게서 받아야 하기 때문에 추가함
+
+/*
+@param{*} props
+부모 comps로 부터 전달받은 모든 것을 담아 오는 바구니
+props를 통하여 전달 받은 모든 것은 read only이다.
+  props 를 통해 전달받은 state도 여기에서 절대 변경 할 수 없다
+props 를 통해 전달받은 state를 변경하려면
+  state를 변경할 함수도 같이 전달 받아야 한다
+
+*/
 const TodoInput = (props) => {
   // 화면에 데이터를 rendering할 떄 사용할 state 선언
   // const [content, setContent] = useState("");
 
-  // 여기도 바뀜
-  const { content, setContent } = props;
+  // 여기는 helloE와 같이 각각을 변수로 선언 한 것이다
+  const { content, setContent, todoListAdd } = props;
 
   const inputChangeHandler = (e) => {
+    // input tag 에서 호출했기 때문에 value값이 input 에서 입력한 값이 된다
     const value = e.target.value;
     setContent(value);
+  };
+  // content는 input으로
+  // list는 list로 보냈다
+
+  // 추가버튼을 클릭했을 떄 할 일
+  const btnClickHandler = (e) => {
+    todoListAdd(content);
+    setContent("");
   };
 
   return (
@@ -29,7 +49,9 @@ const TodoInput = (props) => {
       react 에서는 disabled={true} 라는 속성으로 사용한다
 
       */}
-      <button disabled={content.length < 2}>추가</button>
+      <button onClick={btnClickHandler} disabled={content.length < 2}>
+        저장
+      </button>
     </div>
   );
 };
