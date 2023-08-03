@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import TodoMain from "./comps/TodoMain";
+import "./css/App.css";
+// App Component Main
+// 밑의 function를 함수 component
+// return을 component 본문
 
-function App() {
+const App = () => {
+  // App Component 의 본문(Body)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h1>오늘 할 일</h1>
       </header>
+      <TodoMain />
     </div>
   );
-}
+};
 
+// App component 를 다른 Component, Container 에서 import 할 수 있도록
+// Export하기
 export default App;
