@@ -83,3 +83,59 @@ usestate를 input에서는 = useState("");이렇게 빈칸으로
 		  기존 div에 임시로 막 적은 값을 놔뒀는데 거기를 
 		  <div>{props.item.sdate}</div> 이렇게 바꾼다
 		  굳이 해석하자면 props(item에서 받은 변수).item(list에서 정해준 변수).sdate(샘플데이터에서 정해준 값)
+
+		  넣고자 하는 값을 다 바꿔준 후
+		  item에서 classname을 바꿔준다 -완료된 값에 밑줄을 그어주기 위해
+		  <div className={props.item.complete ? "content line" : "content"}>
+		  이렇게 바꿔주는데 이말은 complete가 true이면 content line을 붙여주고 false면 content를 붙여준다는 말이다
+
+
+		  이제 input에서 입력한 값을 추가할거다 main으로 가자
+
+		  main에는 input과 todolist가 있는데 이 같은 부모를 둔 이 형제 컴포넌트는 서로 데이터를(state를 ) 교환할 수 없다. 그러니 이 두 컴포넌트를 부모 컴포넌트로 이동시켜야 한다. 가로 이동은 안되고 세로 이동만 된다는 말이다
+
+		  이제 todoinput으로 가서 
+		  const [content, setcontent] = useState(""); 이걸 복사하고 기존에 있던건 주석처리한다
+		  복사한건 main의 return위에 붙이고 import에 state를 사용하기 위해
+		  import { useState } from "react";를 붙여준다
+
+		  그리고 todolist에 
+		  import { useState } from "react";
+		  import { SampleData } from "../data/Sampletodo"; 이 두 import를 잘라서 메인에 붙여넣는다
+		  그리고 todolist의 state선언라인도 잘라서 main에 붙여넣고 기존의 todolist의 state 선언 라인은  주석처리 한다
+		  두 state를 부모 컴포넌트로 이동시켰다
+
+		  여기까지 오면 컨텐츠가 없다는 에러가 많이 나올거다
+
+		  자 그럼 이제 input 과 list의 state를 다시 todoinput 과 todolist에 보내야겠지?
+		  그럼 main의 return을 이렇게 바꿔준다
+					  return (
+			    <div className="todo">
+			      <TodoInput content={content} setcontent={setcontent} />
+			      <TodoList todoList={todoList} />
+			    </div>
+			  );
+			  전에 .map을 이용한 것과 같은 원리이다. content라는 변수를 억지로 만들어 보내고 거기에 main의 state를 집어넣은 것이다.
+			  그럼 이제 또 todoinput 과 todolist에서 받아야겠지??
+
+
+		먼저 todoinput 에서 
+		const TodoInput = (props) => { } 이렇게 받고
+		const { content, setcontent } = props; 이걸 추가한다
+		todolist도 마찬가지로
+		const TodoList = (props) => {}이렇게 받고
+  		const { todoList } = props; 이걸 추가한다
+
+  		여기서 의외인 점인 input에는 state와 함수 모두 메인에서 전달해줬는데
+  		list에는 state만 전달했다는 점이다.
+
+  	여기까지 오면 에러는 끝났을거다 state가 다 옮겨졌으니
+
+
+  	이제 기본세팅은 끝났고 insert를 실행한다. 
+  	todoinput 에 함수를 새로 만들어준다 
+  	
+  	const btnClickHandler=(e)=>{
+
+  	}
+  	이건 버튼을 눌렀을 때 할 일이다.
