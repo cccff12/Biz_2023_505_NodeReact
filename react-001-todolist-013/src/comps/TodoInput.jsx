@@ -18,25 +18,29 @@ const TodoInput = (props) => {
   // const [content, setContent] = useState("");
 
   // 여기는 helloE와 같이 각각을 변수로 선언 한 것이다
-  const { content, setContent, todoListAdd } = props;
+  const { todo, setTodo, todoInput } = props;
 
   const inputChangeHandler = (e) => {
     // input tag 에서 호출했기 때문에 value값이 input 에서 입력한 값이 된다
     const value = e.target.value;
-    setContent(value);
+    // setContent(value);
+    setTodo({ ...todo, content: value });
   };
   // content는 input으로
   // list는 list로 보냈다
 
   // 추가버튼을 클릭했을 떄 할 일
   const btnClickHandler = (e) => {
-    todoListAdd(content);
-    setContent("");
+    todoInput(todo.content);
   };
 
   return (
     <div className="input">
-      <input placeholder="TODO" value={content} onChange={inputChangeHandler} />
+      <input
+        placeholder="TODO"
+        value={todo.content}
+        onChange={inputChangeHandler}
+      />
       {/* jsx 주석
       본문의 tag내에서 사용하는 주석문
       
@@ -49,8 +53,13 @@ const TodoInput = (props) => {
       react 에서는 disabled={true} 라는 속성으로 사용한다
 
       */}
-      <button onClick={btnClickHandler} disabled={content.length < 2}>
-        저장
+      <button
+        onClick={btnClickHandler}
+        disabled={todo.content.length < 2}
+        // id가 있다면 update
+        className={todo.id ? "update" : ""}
+      >
+        {todo.id ? "변경 " : "추가 "}
       </button>
     </div>
   );

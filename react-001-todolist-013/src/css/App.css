@@ -8,7 +8,9 @@
 }
 
 .App header {
-  background-color: red;
+  /* background-color: red; */
+  background-image: url(../image/햄스터\ 따봉.jpg);
+  background-size: contain;
   /* 화면 최소값이 10보다 작지 않게 */
   min-height: 10vh;
   display: flex;
