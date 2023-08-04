@@ -131,3 +131,22 @@ root.render(
 // 그리고const root = ReactDom.createRoot(document.querySelector("#root")); 로
 // 불러와
 // root.render로 불러 붙여넣는 것
+
+## NodeJS와 React 연동할 때 port 충돌 방지
+
+- NodeJS는 기본 3000 Port 에서 실행
+- React의 실행 Port 변경
+- package.json 의 다음 Script 변경
+
+```json
+윈도우의 경우
+"start" : "react-scripts start"를
+"start" : "set PORT=5000 && react-scripts start" 으로 변경
+
+MAC이나 Linux 의 경우
+"start" : "react-scripts start"를
+"start" : "export PORT=5000 && react-scripts start" 으로 변경
+
+
+
+```
