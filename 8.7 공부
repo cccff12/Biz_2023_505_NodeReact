@@ -1,0 +1,75 @@
+react 에서 input 다루는 방법
+state 를 활용해야 한다.-main에서 선언
+	(**만약 input 박스가 2개 이상일 경우 json 방식으로 선언하는 것이 좋다
+		const [nums, setNums] = useState({ num1: 0, num2: 0 });
+
+	)
+
+	그리고 아마 inputcomponent를 만들어 놨을텐데 
+		<ArithInput nums={nums} setNums={setNums} /> 이렇게 input으로 전달한다\
+
+		input에서 받을때는 2가지 방법이 있는데 
+
+
+		1. const ArithInput = ({ nums, setNums }) => {}
+
+
+		2. const ArithInput = ()=>{
+			const {nums, setNums} = props
+		}
+	
+	이렇게다 1번은 개수가 적을시 사용
+	2번은 개수가 많을시 props로 새로 선언해 사용
+
+	그리고 헷갈린 부분: input을 가져오는 것이 아닌 state를 input에 넣는 것이었다.
+	<input value={nums.num2} /> 이렇게 말이다. 
+	이렇게 되면 입력된 값이 value에 저장된다
+	그리고 name속성도 부여해야 한다 . 속성을 안주면 null값이 된다. 그러니
+	name 속성을 넣으면
+
+		 <input name="num1"  value={nums.num1} /> 이 input은 num1
+		 <input name="num2"  value={nums.num2} /> 이 input은 num2 
+
+		 가 된다
+
+	그리고 함수를 하나 만든다
+		  const onChanegeHandler = (e) => {
+		    const { name, value } = e.target;
+		    setNums({ ...nums, [name]: value });
+		  };
+		  1. 이 함수의 풀이는 이렇다. 이벤트 객체인e를 받는다 e는 input에서 변경한 정보가 포함되어 있다.
+		  2. e에서 name과 value 를 추출한다. name은 input에서 name으로 설정된 값을 나타내고, value는 입력된 값을 나타낸다
+		  3. setnums 함수를 호출해 nums상태를 변경한다. nums상태를 복제 한 후 새로운 값을 할당하는 방식이다.
+		  4. 복제한 후 변경된 name에 해당하는 키의 값을 value로 갱신한다
+		  그리고 이걸 input에 넣는다.
+		  이부분이 이해가 잘 가지 않을 수 있는데 
+		  [name]: value  이걸 잘 보라. name은 num1과 num2가 있다.
+		  내가 입력한 값이 num1과 num2에 들어가는 것이다
+
+
+		   <input
+	          name="num1"
+	          placeholder="입력값1"
+	          value={nums.num1}
+	          onChange={onChanegeHandler}
+	        />
+      </div>
+      <div>
+	       <input
+	         name="num2"
+	         placeholder="입력값2"
+	         value={nums.num2}
+	         onChange={onChanegeHandler}
+	       />
+	       그럼 이렇게 된다. input에 value로 값을 넣고 name으로 속성을 넣고 onchange에 함수를 넣어 자동으로 값이 받아지게 하는 것이다.
+
+
+	       이제 이렇게 된다. input에 값을 입력하면 onchange가 발동한다 그럼 set이 발생해 state가 변경된다. 그럼 rendering 이 시작된다
+
+
+	       그리고 이를 출력하는 component에서는 
+	       3가지 일을 한다.
+	       하나는 
+	       nums state를 매개변수로 받고
+	        const { num1, num2 } = nums; 이렇게 구조분해를 하고
+  			const [intNum1, intNum2] = [Number(num1), Number(num2)]; input에 입력한 값은 문자열이니 이렇게 숫자형으로 바꿔준다
