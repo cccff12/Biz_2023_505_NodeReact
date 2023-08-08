@@ -6,10 +6,9 @@ state 를 활용해야 한다.-main에서 선언
 	)
 
 	그리고 아마 inputcomponent를 만들어 놨을텐데 
-		<ArithInput nums={nums} setNums={setNums} /> 이렇게 input으로 전달한다\
+		<ArithInput nums={nums} setNums={setNums} /> 이렇게 main에서 input으로 전달한다
 
 		input에서 받을때는 2가지 방법이 있는데 
-
 
 		1. const ArithInput = ({ nums, setNums }) => {}
 

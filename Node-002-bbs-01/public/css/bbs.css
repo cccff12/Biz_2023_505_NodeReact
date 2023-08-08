@@ -1,0 +1,112 @@
+div.bbs.input {
+  width: 60vw;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 16px;
+  margin: 10px auto;
+}
+div.bbs.input div {
+  width: 90%;
+  padding: 3px;
+  margin: 3px;
+  display: flex;
+}
+
+div.bbs.input div.image_box {
+  flex-direction: column;
+}
+
+div.bbs.input label,
+div.bbs.input input {
+  padding: 8px;
+}
+
+div.bbs.input label {
+  flex: 1;
+  text-align: right;
+  margin-right: 5px;
+  color: blue;
+  font-weight: bold;
+  background-color: dodgerblue;
+}
+
+div.bbs.input input {
+  flex: 3;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  outline: none;
+}
+
+div.bbs.input input:hover {
+  background-color: #ddd;
+}
+
+div.bbs.input input:focus {
+  background-color: #ccc;
+}
+
+/*
+
+div.bbs.input div 속성에 display를 flex 로 적용하였더니 
+내부의 전체 div가 flex되고 
+flex 가 된 box는 text-align:right가 적용되지 않는다
+이때는 display를 block으로 재설정하거나
+justify content를 right로 설정하면 된다.
+*/
+
+div.bbs.button {
+  border: none;
+  justify-content: right;
+  /* text-align: right; */
+  /* display: block !important; */
+}
+
+button.bbs.input {
+  padding: 12px 16px;
+  background-color: blue;
+  color: white;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+}
+
+button.bbs.input:hover {
+  box-shadow: 2px 2px 2px 2px black;
+}
+
+label[for="b_image"],
+label[for="b_images"] {
+  color: wheat !important;
+  cursor: pointer;
+  text-align: center !important;
+}
+
+label[for="b_image"]:hover,
+label[for="b_images"]:hover {
+  opacity: 0.8;
+}
+
+label[for="b_image"] {
+  background-color: blue !important;
+  color: wheat !important;
+}
+
+label[for="b_images"] {
+  background-color: rgb(65, 225, 140) !important;
+  color: wheat !important;
+}
+
+input[name="b_image"],
+input[name="b_images"] {
+  display: none;
+}
+
+div.image.gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+div.image.gallery img {
+  border: none;
+  margin: 5px;
+}

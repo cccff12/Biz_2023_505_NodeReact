@@ -9,10 +9,12 @@ block content
             th 작성자
             th 제목
             th 조회수
-        each item in BBS
+        each item in BBS 
             tr 
-                td= item.b_seq 
+                td= item.b_seq
                 td= item.b_date 
                 td= item.b_nickname 
                 td= item.b_title 
                 td= item.b_viewcount
+    .bbs.button
+        button.btn.bbs.insert 게시판 글쓰기

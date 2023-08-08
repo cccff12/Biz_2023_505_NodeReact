@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (navItem.tagName === "LI") {
       // className 이 home이면 URL = "/" 아니면 URL = className 을 실행
-      const URL = (className === "home" && "/") || className;
+      const URL = (className === "home" && "/") || `/${className}`;
       document.location.href = URL;
     }
   });
