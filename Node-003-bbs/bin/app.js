@@ -11,6 +11,7 @@ import express from "express";
 import createError from "http-errors";
 import path from "path";
 import helmet from "helmet";
+import multer from "multer";
 
 // 3rd party lib modules
 import cookieParser from "cookie-parser";
@@ -42,6 +43,9 @@ app.disable("x-powered-by");
 // view engine setup
 app.set("views", path.join("views"));
 app.set("view engine", "pug");
+
+// express 에 multer middle ware 설치
+app.use(multer().array());
 
 // middleWare enable
 app.use(logger("dev"));
