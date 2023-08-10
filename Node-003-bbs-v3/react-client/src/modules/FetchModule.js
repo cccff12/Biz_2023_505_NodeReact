@@ -16,6 +16,7 @@
 const URL = {
   HELLO: "/bbs",
   BBS_INSERT: "/bbs/insert",
+  BBS_LIST: "/bbs/list",
 };
 
 // 함수 선언문에 export 를 붙이면 개별 함수가 export된다
@@ -31,6 +32,16 @@ export const hello = async () => {
   return json.title;
 };
 
+export const getBbsList = async () => {
+  try {
+    const response = await fetch(URL.BBS_LIST);
+    const bbsList = response.json();
+    console.table(bbsList);
+    return bbsList;
+  } catch (error) {
+    return [];
+  }
+};
 export const bbsInsert = async (FormData) => {
   const fetchData = {
     method: "POST",
