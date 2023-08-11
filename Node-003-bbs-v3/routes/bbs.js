@@ -28,9 +28,18 @@ const Hello = {
   message: "Hello NodeJS BBS World",
 };
 
+// multer 를 사용해 파일을 수신 할 때
+// multer 가 파일이름을 latin1 방식으로 파일이름을 encoding 을 적용해 버린다
+// window에서는 한글 이름이 깨진다
+const encKor = (str) => {
+  console.log(str);
+  return Buffer.from(str, "latin1").toString("UTF-8");
+};
+
 // 파일을 전송하기 위한 설정값 만들기
 const storageOption = {
   filename: (req, file, cb) => {
+    file.originalname = encKor(file.originalname);
     const originName = file.originalname;
     const filePrix = `${Date.now}-${Math.round(Math.random() * 100000)}`;
     const fileName = `${filePrix}-${originName}`;
@@ -73,14 +82,40 @@ router.post("/insert", uploadMiddleWare.array("b_images"), async (req, res) => {
     const filesDto = {};
     filesDto.f_image = files[i].filename;
     filesDto.f_origin_image = files[i].originalname;
-    filesDto.f_bseq = result.f_bseq;
+    filesDto.f_bseq = result.b_seq;
     await FILES.create(filesDto);
   }
   res.send("OK");
 });
 
 router.get("/list", async (req, res) => {
-  const bbsList = await BBS.findAll();
+  // include
+  // sequelize 에서 1:N 관계가 설정되어 있을 때 자동 JOIN 하는 코드
+
+  const bbsList = await BBS.findAll({
+    include: { model: FILES, as: "F_FILES" },
+  });
+  return res.json(bbsList);
+});
+
+// 만약 localhost:3000/bbs/detail/3 으로 요청이 되면
+// 3이라는 값이 seq변수에 담긴다.
+// ?seq = 값 => queryString 방식
+//    req.query.seq로 값 받기
+// /:seq :PathVarriable 방식
+//    req.params.seq로 받기
+// form 으로 전송한 데이터는
+//    req.body 에 담겨서 통째로
+router.get("/detail/:seq", async (req, res) => {
+  const seq = req.params.seq;
+
+  // include
+  // sequelize 에서 1:N 관계가 설정되어 있을 때 자동 JOIN 하는 코드
+
+  const bbsList = await BBS.findOne({
+    where: { b_seq: seq },
+    include: { model: FILES, as: "F_FILES" },
+  });
   return res.json(bbsList);
 });
 
