@@ -1,7 +1,5 @@
 import { InputDiv } from "../styled/BBsStyled";
 import { Button } from "../styled/MyButton";
-import moment from "moment";
-import uuid from "react-uuid";
 
 const BBsInput = ({ bbsDto, setBbsDto, bbsInput }) => {
   const inputOnChange = (e) => {
