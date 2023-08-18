@@ -1,13 +1,21 @@
-import { Button, Form, InputDiv } from "../styled/BBsStyled";
+import { InputDiv } from "../styled/BBsStyled";
+import { Button } from "../styled/MyButton";
+import moment from "moment";
+import uuid from "react-uuid";
 
-const BBsInput = ({ bbsDto, setBbsDto }) => {
+const BBsInput = ({ bbsDto, setBbsDto, bbsInput }) => {
   const inputOnChange = (e) => {
     const { name, value } = e.target;
     setBbsDto({ ...bbsDto, [name]: value });
   };
 
+  const btnOnClickHandler = () => {
+    bbsInput();
+  };
+
   return (
-    <Form>
+    // <Form>
+    <>
       <InputDiv>
         <label htmlFor="">작성자</label>
         <input
@@ -35,8 +43,11 @@ const BBsInput = ({ bbsDto, setBbsDto }) => {
           onChange={inputOnChange}
         />
       </InputDiv>
-      <Button type="button" />
-    </Form>
+      <Button type="button" onClick={btnOnClickHandler}>
+        저장
+      </Button>
+      {/* </Form> */}
+    </>
   );
 };
 export default BBsInput;

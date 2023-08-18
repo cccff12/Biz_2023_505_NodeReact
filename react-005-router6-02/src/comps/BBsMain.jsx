@@ -1,30 +1,88 @@
 import { useState, useEffect } from "react";
-import { useRoutes, Outlet, NavLink, Navigate } from "react-router-dom";
+import {
+  useRoutes,
+  Outlet,
+  NavLink,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import BBsList from "./BBsList";
 import BBsItem from "./BBsItem";
 import BBsInput from "./BBsInput";
 import { BBsDto as bbsData, BBsList as bbsListData } from "../data/BBsData";
+import moment from "moment";
+import uuid from "react-uuid";
+import localforage from "localforage";
+
+const BBsBody = () => {
+  return (
+    <>
+      <h3>여기는 게시판</h3>
+      <Outlet />
+    </>
+  );
+};
 
 const BBsMain = () => {
   const [bbsDto, setBbsDto] = useState(bbsData);
-  const [bbsList, setBbsList] = useState(bbsListData);
+  const [bbsList, setBbsList] = useState([]);
+  const navigate = useNavigate();
+
+  // 화면이 최초로 랜더링 된 후(Mount 된 후) 에 한 번만 실행하라
+  useEffect(() => {
+    const getForage = async () => {
+      setBbsList(await localforage.getItem("BBS"));
+    };
+    getForage();
+  }, []);
+
+  // bbsList가 변경되면 앞에 있는 함수를 실행하라
+  useEffect(() => {
+    const setForage = async () => {
+      await localforage.setItem("BBS", bbsList);
+    };
+    setForage();
+  }, [bbsList]);
+
+  const bbsUpdate = () => {
+    const newBbsList = bbsList.map((bbs) => {
+      if (bbs.id === bbsDto.id) {
+        const updateBbs = {
+          ...bbs,
+          bContent: bbsDto.bContent,
+          bSubject: bbsDto.bSubject,
+        };
+        return updateBbs;
+      }
+      return bbs;
+    });
+    setBbsList([...newBbsList]);
+  };
+
+  const bbsInput = () => {
+    let newBbsDto = { ...bbsData };
+    if (!bbsDto.id) {
+      newBbsDto = {
+        ...bbsDto,
+        id: uuid(),
+        bDate: moment().format("YYYY[-]MM[-]DD"),
+      };
+    } else {
+      return bbsUpdate();
+    }
+    setBbsList([...bbsList, newBbsDto]);
+    navigate("/bbs");
+  };
+
   // 컴포넌트를 합치는걸 합성이라고 부름
   /**
    * 가. BBsList.jsx 에서 bbsList 데이터를 props 로 받아
    *     만들던 BBsItem 컴포넌트를 BBsMain.jsx에서 만들고 있다
    */
-  const bbsListItemView = bbsList?.map((item) => {
-    return <BBsItem item={item} key={item.id} />;
+  const bbsListItemView = bbsList?.map((item, index) => {
+    return <BBsItem item={item} key={item.id} seq={index} />;
   });
 
-  const BBsBody = () => {
-    return (
-      <>
-        <h3>여기는 게시판</h3>
-        <Outlet />
-      </>
-    );
-  };
   const bbsRouter = useRoutes([
     // rootPath : /bbs 로 요청
     {
@@ -52,7 +110,13 @@ const BBsMain = () => {
         },
         {
           path: "writer",
-          element: <BBsInput bbsDto={bbsDto} setBbsDto={setBbsDto} />,
+          element: (
+            <BBsInput
+              bbsDto={bbsDto}
+              setBbsDto={setBbsDto}
+              bbsInput={bbsInput}
+            />
+          ),
         },
         {
           // Navigate Component

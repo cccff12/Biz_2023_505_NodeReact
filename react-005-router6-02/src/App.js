@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "./css/App.css";
 import { useRoutes, Outlet, useNavigate } from "react-router-dom";
 import BBsMain from "./comps/BBsMain";
-import { Button } from "./styled/BBsStyled";
+import { Button } from "./styled/MyButton";
 
 /**
  * react-router-dom의 useNavigate() hooks 함수
@@ -28,20 +28,31 @@ router 를 return하는 구조로 변경한다.
 
 
 */
+const AppBody = () => {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+      </header>
+      <Outlet />
+    </div>
+  );
+}; // end AppBody
+
 function App() {
   // useNavigate hooks 함수를 사용하여 navigate 객체 생성
   const navigate = useNavigate();
   // App Component 내에 inner Component 를 생성하기
-  const AppBody = () => {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
-        <Outlet />
-      </div>
-    );
-  }; // end AppBody
+  // const AppBody = () => {
+  //   return (
+  //     <div className="App">
+  //       <header className="App-header">
+  //         <img src={logo} className="App-logo" alt="logo" />
+  //       </header>
+  //       <Outlet />
+  //     </div>
+  //   );
+  // }; // end AppBody
   // App.js Component 를 화면에 표현하면 , react-router-dom에 의해서 path를 감지하고
   // AppBodt Component를 화면에 렌더링한다.
   const appRouter = useRoutes([
