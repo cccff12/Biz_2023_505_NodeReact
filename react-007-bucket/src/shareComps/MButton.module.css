@@ -1,0 +1,16 @@
+.btn {
+  color: wheat;
+  background-color: #7342ff;
+  border-radius: 5px;
+  border: 0;
+  outline: none;
+  padding: 0.5rem 0.75rem;
+  margin: 4px 0px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 700;
+}
+
+.btn:hover {
+  background-color: #aaa;
+}
