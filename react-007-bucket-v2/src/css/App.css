@@ -11,7 +11,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 0.00001s linear;
+    animation: App-logo-spin infinite 20s linear;
   }
 }
 
@@ -38,9 +38,10 @@
     transform: rotate(360deg);
   }
 }
+
 section.main {
   flex: 1;
   display: flex;
   padding: 0.5rem;
-  border: 1px solid #61dafb;
+  border: 1px solid #aaa;
 }
