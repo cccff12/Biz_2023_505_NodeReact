@@ -43,4 +43,16 @@ firebase login
 npm run build
 
 firebase init
+# () Hosting : Configure files ... 선택
+# Use an existing project 선택
+# 배포할 프로젝트 선택
+# public 폴더입력 : build
+# 기타 나머지는 모두 n
+
+firebase deploy
 ```
+
+만약 수정했을 경우
+
+1. npm run build
+2. firebase deploy
